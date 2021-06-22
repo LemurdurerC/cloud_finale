@@ -24,7 +24,7 @@ def getTextFromImage(img):
 
 def getEntitiesFromText(text):
 
-    nlp = spacy.load("output/model-last")
+    nlp = spacy.load("outputBIG/model-best")
     line = text
 
     total = ""
@@ -46,7 +46,7 @@ def getEntitiesFromText(text):
     return company, date, total
 
 def magicPipeline(image):
-    print(getEntitiesFromText(getTextFromImage(imagePreTreatment(image))))
+    return getEntitiesFromText(getTextFromImage(imagePreTreatment(image)))
 
 
 

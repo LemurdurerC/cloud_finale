@@ -43,22 +43,16 @@ async def create_upload_file(file: UploadFile = File(...)):
         print("ok")
     except Exception as e:
         print("Lol")
-    data = {"id" : "999", "company" : "alfonso", "date" : "18-06-2021", "total" : "200"}
-    datas = json.dumps(data)
-    sendElasticSearch(datas)
-    magicPipeline(img)
+    data = magicPipeline(img)
+    sendElasticSearch(data)
 
-    # appeler le reste du pipeline
-    #ocr
-    #prédiction
-    # retour à l'utilisateur + stockage elastic search
 
 def sendElasticSearch(datas):
+
     es = Elasticsearch(HOST="http://localhost", PORT=9200)
     es = Elasticsearch()
     print("je rentre dans la fonction elastic")
-    ticket_data = json.loads(datas)
-    ticket = {"id": ticket_data["id"], "company": ticket_data["company"],"date": ticket_data["date"], "total": ticket_data["total"]}
+    ticket = {"id": "TESTID", "company": str(datas[0]),"date": str(datas[1]), "total": str(datas[2])}
     es.index(index="tickets", doc_type="text", body=ticket)
 
 

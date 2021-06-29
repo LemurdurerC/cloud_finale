@@ -80,7 +80,8 @@ def sendElasticSearch(datas,matricule):
     if total == '':
         total= 0
 
-    total = total.replace(",",".")
+    if "," in total:
+        total = total.replace(",",".")
 
     ticket = {"id": matricule, "company": company,"date": date, "total": total}
 

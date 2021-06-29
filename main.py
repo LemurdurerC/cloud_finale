@@ -28,6 +28,8 @@ origins = [
     "http://localhost:3000",
     "http://localhost:8000",
     "http://0.0.0.0",
+    "http://0.0.0.0:3000",
+    "http://0.0.0.0:8000",
     "https://0.0.0.0"
 ]
 app.add_middleware(
@@ -57,6 +59,7 @@ async def create_upload_file(file : UploadFile = File(...),cookie: str = Form(..
     ticket = sendElasticSearch(data,cookie.split('=')[1])
     ticket = str(ticket).replace("{", "")
     ticket = str(ticket).replace("}", "")
+    content = ticket
     return {ticket}
 
 
@@ -80,8 +83,7 @@ def sendElasticSearch(datas,matricule):
     if total == '':
         total= 0
 
-    if "," in total:
-        total = total.replace(",",".")
+
 
     ticket = {"id": matricule, "company": company,"date": date, "total": total}
 
@@ -94,4 +96,4 @@ def sendElasticSearch(datas,matricule):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="localhost", port=8000) #ssl_keyfile="/etc/apache2/server.key", ssl_certfile="/etc/apache2/server.crt")
+    uvicorn.run(app, host="0.0.0.0", port=8000) #ssl_keyfile="/etc/apache2/server.key", ssl_certfile="/etc/apache2/server.crt")

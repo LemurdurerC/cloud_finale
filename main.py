@@ -22,15 +22,7 @@ from fastapi import Cookie, FastAPI
 app = FastAPI()
 #app.add_middleware(HTTPSRedirectMiddleware)
 origins = [
-    "https://localhost.tiangolo.com",
-    "https://localhost.tiangolo.com",
-    "http://localhost",
-    "http://localhost:3000",
-    "http://localhost:8000",
-    "http://0.0.0.0",
-    "http://0.0.0.0:3000",
-    "http://0.0.0.0:8000",
-    "https://0.0.0.0"
+    "*"
 ]
 app.add_middleware(
     CORSMiddleware,
@@ -83,6 +75,8 @@ def sendElasticSearch(datas,matricule):
     if total == '':
         total= 0
 
+    if "," in str(total):
+        total = total.replace(",",".")
 
 
     ticket = {"id": matricule, "company": company,"date": date, "total": total}
